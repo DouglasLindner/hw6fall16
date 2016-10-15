@@ -10,6 +10,8 @@
     = check_box_tag "ratings[#{rating}]", 1, @selected_ratings.include?(rating), :id => "ratings_#{rating}"
   = submit_tag 'Refresh', :id => 'ratings_submit'
 
+= Movie.all.each {|x| puts x.title}
+
 %table#movies
   %thead
     %tr
@@ -24,5 +26,12 @@
         %td= movie.rating
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
+        
+= form_tag movies_search_tmdb_path, :method => :post do
+  
+  %label Search Terms
+  = text_field_tag :search_terms, params[:search_terms], id: 'search_box'
+
+  = submit_tag 'Search TMDb', :id => 'search_button'
 
 = link_to 'Add new movie', new_movie_path
